@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Logic
+  - PipeSpawner
+  - PipeMove
   layers:
   - Default
   - TransparentFX
