@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Challenges.unity
     guid: 5f62f95a1f7bdcb45b19436e922a151d
   - enabled: 1
+    path: Assets/Scenes/Difficulty.unity
+    guid: d8c8d2263a6d61d469f9096c0f0d561d
+  - enabled: 1
     path: Assets/Scenes/TheGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
