@@ -8,6 +8,8 @@ public class SceneManagerScript : MonoBehaviour
 {
 
     public PipeMoveScript pipeMove;
+
+    //public bool isFreeMode = false;
     
     public void LoadScene(string sceneName)
     {
@@ -17,7 +19,9 @@ public class SceneManagerScript : MonoBehaviour
     public void FreeMode(string sceneName)
     {
         pipeMove.boost = 0f;
-        Debug.Log("Easy");
+        Debug.Log("FreeMode");
+        PlayerPrefs.SetString("mode", "free");
+        PlayerPrefs.Save();
         LoadScene(sceneName);
     }
 
@@ -25,6 +29,8 @@ public class SceneManagerScript : MonoBehaviour
     {
         pipeMove.boost = 0.5f;
         Debug.Log("Easy");
+        PlayerPrefs.SetString("mode", "challenge");
+        PlayerPrefs.Save();
         LoadScene(sceneName);
     }
 
@@ -32,6 +38,8 @@ public class SceneManagerScript : MonoBehaviour
     {
         pipeMove.boost = 1f;
         Debug.Log("Medium");
+        PlayerPrefs.SetString("mode", "challenge");
+        PlayerPrefs.Save();
         LoadScene(sceneName);
     }
 
@@ -39,6 +47,8 @@ public class SceneManagerScript : MonoBehaviour
     {
         pipeMove.boost = 2f;
         Debug.Log("Hard");
+        PlayerPrefs.SetString("mode", "challenge");
+        PlayerPrefs.Save();
         LoadScene(sceneName);
     }
 

@@ -18,9 +18,9 @@ public class LogicScript : MonoBehaviour
 
     private int highScore = 0;
     public GameObject gameOverScreen;
+    public GameObject victoryScreen;
     private bool deleted = false;
-    //private float timer = 0;
-    //public float soundPlays = 0f;
+    
 
     [ContextMenu("Increase Score")]
     public void addScore(int scoreToAdd)
@@ -32,7 +32,7 @@ public class LogicScript : MonoBehaviour
         {
             pickCoinSoundIfTen.Play();
         }
-
+        
     }
 
     public void flapSound()
@@ -64,6 +64,13 @@ public class LogicScript : MonoBehaviour
 
         
         
+    }
+
+    public void victoryMenu()
+    {
+        victoryScreen.SetActive(true);
+
+        //have to be added a sound effect
     }
 
     public void killBestScore()

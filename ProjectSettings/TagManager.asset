@@ -7,6 +7,11 @@ TagManager:
   - Logic
   - PipeSpawner
   - PipeMove
+  - Bird
+  - SceneManager
+  - mark1
+  - mark2
+  - mark3
   layers:
   - Default
   - TransparentFX
