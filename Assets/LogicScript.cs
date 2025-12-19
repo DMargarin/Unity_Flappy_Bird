@@ -20,7 +20,11 @@ public class LogicScript : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject victoryScreen;
     private bool deleted = false;
+    public bool switcher1 = false;
+    public bool switcher2 = false;
+    public bool switcher3 = false;
     
+
 
     [ContextMenu("Increase Score")]
     public void addScore(int scoreToAdd)
@@ -69,6 +73,9 @@ public class LogicScript : MonoBehaviour
     public void victoryMenu()
     {
         victoryScreen.SetActive(true);
+
+        //PlayerPrefs.SetInt("mark1", 1);
+        //PlayerPrefs.Save();
 
         //have to be added a sound effect
     }

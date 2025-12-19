@@ -9,16 +9,14 @@ public class BirdScript : MonoBehaviour
     public Rigidbody2D myRigidbody;
     public LogicScript logic;
     public AudioSource birdFlapSound;
-    public GameObject mark1;
-    public GameObject mark2;
-    public GameObject mark3;
+    
 
     public float flapStrength;
     public bool IsAlive = true;
     private bool isGameOverScreenOn = false;
     private bool isVictoryScreenOn = false;
     private string mode;
-    private bool markOneState;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,14 +24,8 @@ public class BirdScript : MonoBehaviour
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
         mode = PlayerPrefs.GetString("mode", "challenge");
         Debug.Log("Mode: " + mode);
-        mark1 = GameObject.FindGameObjectWithTag("mark1");
-        mark2 = GameObject.FindGameObjectWithTag("mark2");
-        mark3 = GameObject.FindGameObjectWithTag("mark3");
 
-        markOneState = System.Convert.ToBoolean(PlayerPrefs.GetString("mark1", "false"));
-        mark1.SetActive(markOneState);
-        mark2.SetActive(true);
-        mark3.SetActive(true);
+        
     }
 
     // Update is called once per frame
@@ -86,10 +78,20 @@ public class BirdScript : MonoBehaviour
         {
             if(mode == "easy")
             {
-                PlayerPrefs.SetString("mark", "true");
+                PlayerPrefs.SetInt("mark1", 1);
                 PlayerPrefs.Save();
             }
-            logic.victoryMenu();
+            else if(mode == "medium")
+            {
+                PlayerPrefs.SetInt("mark2", 1);
+                PlayerPrefs.Save();
+            }
+            else if(mode == "hard")
+            {
+                PlayerPrefs.SetInt("mark3", 1);
+                PlayerPrefs.Save();
+            }
+                logic.victoryMenu();
             isVictoryScreenOn = true;
         }
         
