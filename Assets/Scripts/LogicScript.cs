@@ -8,9 +8,9 @@ using System;
 public class LogicScript : MonoBehaviour
 {
     public int playerScore;
-    public Text score;
-    public Text urScore;
-    public Text bestScore;
+    public TMPro.TMP_Text score;
+    public TMPro.TMP_Text urScore;
+    public TMPro.TMP_Text bestScore;
     public AudioSource pickCoinSound;
     public AudioSource pickCoinSoundIfTen;
     public AudioSource soundIfDeath;
