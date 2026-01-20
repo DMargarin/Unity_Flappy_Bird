@@ -30,12 +30,14 @@ public class LogicScript : MonoBehaviour
     public void addScore(int scoreToAdd)
     {
         playerScore += scoreToAdd;
-        score.text = playerScore.ToString();
+        score.text = playerScore.ToString();// Upper Left Number on the Screen
         
         if (playerScore % 10 == 0 && playerScore != 0)
         {
             pickCoinSoundIfTen.Play();
         }
+
+        /*______________________________________________*/
         
     }
 
@@ -54,20 +56,31 @@ public class LogicScript : MonoBehaviour
 
         soundIfDeath.Play();
 
-        urScore.text = "Your score: " + playerScore.ToString();
+        //Score counting
+
 
         highScore = PlayerPrefs.GetInt("highScore", 0);
 
-        if (playerScore > highScore && deleted == false)
+        if (highScore <= playerScore && deleted == false)
         {
             PlayerPrefs.SetInt("highScore", playerScore);
+            PlayerPrefs.Save();
+            urScore.text = "Your score: " + playerScore.ToString();
+            bestScore.text = "Best score: " + PlayerPrefs.GetInt("highscore", playerScore);
+
+            Debug.Log("The first condition worked");
+            Debug.Log("Best Score: " + bestScore.text);
         }
-       
+        else
+        {
+            urScore.text = "Your score: " + playerScore.ToString();
+            bestScore.text = "Best score: " + highScore.ToString();
 
-        bestScore.text = "Best Score: " + highScore.ToString();
+            Debug.Log("The second condition worked");
 
-        
-        
+            //Debug.Log("Your Score: " + playerScore);
+            //Debug.Log("Best Score: " + highScore);
+        } 
     }
 
     public void victoryMenu()
@@ -85,5 +98,6 @@ public class LogicScript : MonoBehaviour
         PlayerPrefs.DeleteKey("highScore");
         PlayerPrefs.Save();
         deleted = true;
+        Debug.Log("Data was deleted");
     }
 }

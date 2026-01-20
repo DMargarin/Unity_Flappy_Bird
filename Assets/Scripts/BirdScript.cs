@@ -42,7 +42,7 @@ public class BirdScript : MonoBehaviour
             birdDeath();
         }
 
-        if (IsAlive == false) //if bird is dead we can restart with "space"
+        if (IsAlive == false && isVictoryScreenOn == false) //Restarting with space
         {
             if (Input.GetKeyDown(KeyCode.Space) == true)
             {
@@ -50,7 +50,7 @@ public class BirdScript : MonoBehaviour
             }
         }
         
-        if(logic.playerScore == 100 && mode != "free") // for challenges
+        if(logic.playerScore == 100 && mode != "free") // Victory screen for challenges
         {
             victory(mode);
         }
@@ -74,26 +74,80 @@ public class BirdScript : MonoBehaviour
 
     public void victory(string mode)
     {
-        if (isVictoryScreenOn == false)
+        IsAlive = false;
+
+        string typeOfChallenge = PlayerPrefs.GetString("challengeType", "type");
+
+        switch (typeOfChallenge)
         {
-            if(mode == "easy")
-            {
-                PlayerPrefs.SetInt("mark1", 1);
-                PlayerPrefs.Save();
-            }
-            else if(mode == "medium")
-            {
-                PlayerPrefs.SetInt("mark2", 1);
-                PlayerPrefs.Save();
-            }
-            else if(mode == "hard")
-            {
-                PlayerPrefs.SetInt("mark3", 1);
-                PlayerPrefs.Save();
-            }
-                logic.victoryMenu();
-            isVictoryScreenOn = true;
+            case "challenge1":
+                if (isVictoryScreenOn == false)
+                {
+                    if (mode == "easy")
+                    {
+                        PlayerPrefs.SetInt("mark1", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "medium")
+                    {
+                        PlayerPrefs.SetInt("mark2", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "hard")
+                    {
+                        PlayerPrefs.SetInt("mark3", 1);
+                        PlayerPrefs.Save();
+                    }
+                    logic.victoryMenu();
+                    isVictoryScreenOn = true;
+                }
+            break;
+
+            case "challenge2":
+                if (isVictoryScreenOn == false)
+                {
+                    if (mode == "easy")
+                    {
+                        PlayerPrefs.SetInt("mark4", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "medium")
+                    {
+                        PlayerPrefs.SetInt("mark5", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "hard")
+                    {
+                        PlayerPrefs.SetInt("mark6", 1);
+                        PlayerPrefs.Save();
+                    }
+                    logic.victoryMenu();
+                    isVictoryScreenOn = true;
+                }
+            break;
+
+            case "challenge3":
+                if (isVictoryScreenOn == false)
+                {
+                    if (mode == "easy")
+                    {
+                        PlayerPrefs.SetInt("mark7", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "medium")
+                    {
+                        PlayerPrefs.SetInt("mark8", 1);
+                        PlayerPrefs.Save();
+                    }
+                    else if (mode == "hard")
+                    {
+                        PlayerPrefs.SetInt("mark9", 1);
+                        PlayerPrefs.Save();
+                    }
+                    logic.victoryMenu();
+                    isVictoryScreenOn = true;
+                }
+            break;
         }
-        
     }
 }
