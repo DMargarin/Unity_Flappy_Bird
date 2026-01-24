@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49fc8888b1874745ac5d287b81591b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScore: 99
+  playerScore: 0
   score: {fileID: 411565573}
   urScore: {fileID: 1463490806}
   bestScore: {fileID: 1053324952}
