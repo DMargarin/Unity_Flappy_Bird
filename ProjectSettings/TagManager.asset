@@ -12,6 +12,7 @@ TagManager:
   - mark1
   - mark2
   - mark3
+  - SkinManager
   layers:
   - Default
   - TransparentFX

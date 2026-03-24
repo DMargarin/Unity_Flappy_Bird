@@ -6,7 +6,9 @@ using UnityEngine;
 public class PipeMoveScript : MonoBehaviour
 {
     public LogicScript logic;
-    
+    public SpriteRenderer pipe1;
+    public SpriteRenderer pipe2;
+
     public static float moveSpeed = 5f;
     private float deadZone = -35;
     public float boost = 0.5f;
@@ -20,6 +22,8 @@ public class PipeMoveScript : MonoBehaviour
     void Start()
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+        pipe1.sprite = ThemeSelector.Instance.GetCurrentTheme();
+        pipe2.sprite = ThemeSelector.Instance.GetCurrentTheme();
     }
 
     // Update is called once per frame
