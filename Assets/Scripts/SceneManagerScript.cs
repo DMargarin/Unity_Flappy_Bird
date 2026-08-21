@@ -14,7 +14,7 @@ public class SceneManagerScript : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    public void typeOfChallenge(int i)
+    public void typeOfChallenge(int i)        //if several challenges
     {
         switch (i) // Remembering of a challenge
         {
@@ -23,21 +23,21 @@ public class SceneManagerScript : MonoBehaviour
                 PlayerPrefs.SetString("challengeType", "challenge1");
                 PlayerPrefs.Save();
                 LoadScene("Difficulty");
-            break;
+                break;
 
             case 2:
                 Debug.Log("Ñhallenge 2");
                 PlayerPrefs.SetString("challengeType", "challenge2");
                 PlayerPrefs.Save();
                 LoadScene("Difficulty");
-            break;
+                break;
 
             case 3:
                 Debug.Log("Ñhallenge 3");
                 PlayerPrefs.SetString("challengeType", "challenge3");
                 PlayerPrefs.Save();
                 LoadScene("Difficulty");
-            break;
+                break;
         }
     }
 
