@@ -22,8 +22,16 @@ public class PipeMoveScript : MonoBehaviour
     void Start()
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
-        pipe1.sprite = ThemeSelector.Instance.GetCurrentTheme();
-        pipe2.sprite = ThemeSelector.Instance.GetCurrentTheme();
+
+        string wholeName = "theme_" + ThemeSelector.Instance.GetCurrentName();
+
+        bool i = PlayerPrefs.GetInt(wholeName, 0) == 1;
+
+        if (i == true)
+        {
+            pipe1.sprite = ThemeSelector.Instance.GetCurrentTheme();
+            pipe2.sprite = ThemeSelector.Instance.GetCurrentTheme();
+        }
     }
 
     // Update is called once per frame

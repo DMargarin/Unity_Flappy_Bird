@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DifficultyLevelsUIScript : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class DifficultyLevelsUIScript : MonoBehaviour
     public GameObject mark7;
     public GameObject mark8;
     public GameObject mark9;
+
+    public Button[] buttons;
+
+    public Button prize1;
+    public Button prize2;
+    public Button prize3;
+
     public TMPro.TMP_Text task;
 
     private string typeOfChallenge;
@@ -21,16 +29,27 @@ public class DifficultyLevelsUIScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        stateOfButtons();
 
-        typeOfChallenge = PlayerPrefs.GetString("challengeType", "type");
+        // Проходим циклом по всем кнопкам
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Button currentButton = buttons[i];
+
+            // Подписываем каждую кнопку на один и тот же универсальный метод
+            currentButton.onClick.AddListener(() => OnAnyButtonClicked(currentButton));
+        }
+
+        typeOfChallenge = PlayerPrefs.GetString("challengeType", "type"); //marks' system
 
         MarksSwitchingOff();
 
-        switch (typeOfChallenge)
+        switch (typeOfChallenge) // wk of challenge did we get?
         {
             case "challenge1":
                 task.text = 
-                    "In this challenge you need to watch for bird's speed, it will increase during playing the game.\r\n" +
+                    "In this challenge you need to watch for pig's speed, it will increase during playing the game.\r\n" +
                     "As soon as you get 100 points you win.\r\n" +
                     "Good luck!";
 
@@ -76,14 +95,9 @@ public class DifficultyLevelsUIScript : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
     
-   public void MarksSwitchingOff()
-    {
+   public void MarksSwitchingOff() //turning off the marks (probably could do the same via inspector)
+   {
         mark1.SetActive(false);
         mark2.SetActive(false);
         mark3.SetActive(false);
@@ -93,20 +107,79 @@ public class DifficultyLevelsUIScript : MonoBehaviour
         mark7.SetActive(false);
         mark8.SetActive(false);
         mark9.SetActive(false);
-    }
+   }
 
-   public void deleteAllMarks() {
-        
+   public void deleteAllMarks() //deleting all the memory
+   {
         PlayerPrefs.DeleteKey("mark1");
         PlayerPrefs.DeleteKey("mark2");
         PlayerPrefs.DeleteKey("mark3");
-        PlayerPrefs.DeleteKey("mark4");
+        /*PlayerPrefs.DeleteKey("mark4");
         PlayerPrefs.DeleteKey("mark5");
         PlayerPrefs.DeleteKey("mark6");
         PlayerPrefs.DeleteKey("mark7");
         PlayerPrefs.DeleteKey("mark8");
-        PlayerPrefs.DeleteKey("mark9");
+        PlayerPrefs.DeleteKey("mark9");*/
+        PlayerPrefs.DeleteKey("prize1");
+        PlayerPrefs.DeleteKey("prize2");
+        PlayerPrefs.DeleteKey("prize3");
+        PlayerPrefs.DeleteKey("prizeCounter1");
+        PlayerPrefs.DeleteKey("prizeCounter2");
+        PlayerPrefs.DeleteKey("prizeCounter3");
+        /*PlayerPrefs.SetInt("prize1", 0);
+        PlayerPrefs.SetInt("prize2", 0);
+        PlayerPrefs.SetInt("prize3", 0);
+        PlayerPrefs.SetInt("prizeCounter1", 0);
+        PlayerPrefs.SetInt("prizeCounter2", 0);
+        PlayerPrefs.SetInt("prizeCounter3", 0);*/
         PlayerPrefs.Save();
    }
 
+    // Универсальный метод, который знает, какая именно кнопка была нажата
+    void OnAnyButtonClicked(Button clickedButton)
+    {
+        Debug.Log($"Нажата кнопка: {clickedButton.name}");
+
+        clickedButton.interactable = false;
+
+        PlayerPrefs.SetInt(clickedButton.name, 0);
+        PlayerPrefs.Save();
+
+        switch (clickedButton.name)
+        {
+            case "prize1":
+                MainTitleScreen.Instance.addMoney(10);
+                break;
+
+            case "prize2":
+                MainTitleScreen.Instance.addMoney(25);
+                break;
+
+            case "prize3":
+                MainTitleScreen.Instance.addMoney(50);
+                break;
+
+        }
+
+
+        /*Debug.Log("This button is:" + clickedButton.name);
+        bool p1 = PlayerPrefs.GetInt("prize1", 0) == 1;
+        bool p2 = PlayerPrefs.GetInt("prize2", 0) == 1;
+        bool p3 = PlayerPrefs.GetInt("prize3", 0) == 1;
+        Debug.Log("prize1 is: " + p1);
+        Debug.Log("prize2 is: " + p2);
+        Debug.Log("prize3 is: " + p3);*/
+    }
+
+    void stateOfButtons() //checking out should we turn on/off a button
+    {
+        Debug.Log("Buttons' Defenition!");
+        bool p1 = PlayerPrefs.GetInt("prize1", 0) == 1;
+        prize1.interactable = p1;
+        bool p2 = PlayerPrefs.GetInt("prize2", 0) == 1;
+        prize2.interactable = p2;
+        bool p3 = PlayerPrefs.GetInt("prize3", 0) == 1;
+        /*Debug.Log(p3);*/
+        prize3.interactable = p3;
+    }
 }

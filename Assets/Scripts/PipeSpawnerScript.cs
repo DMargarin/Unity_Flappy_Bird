@@ -13,11 +13,15 @@ public class PipeSpawnerScript : MonoBehaviour
     private float previousSpeed;
     private bool isInitialized = false;
 
+    private int pipeCounter;
+    /*public PipeMiddleScript middle;*/
 
     // Start is called before the first frame update
     void Start()
     {
+        
         spawnPipe();
+        showOrNot();
     }
 
     // Update is called once per frame
@@ -47,6 +51,7 @@ public class PipeSpawnerScript : MonoBehaviour
             if (timer >= spawnRate)
             {
                 spawnPipe();
+                showOrNot();
                 timer = 0;
             }
         }
@@ -58,15 +63,30 @@ public class PipeSpawnerScript : MonoBehaviour
         else
         {
             spawnPipe();
+            showOrNot();
             timer = 0;
         }
     }
 
     void spawnPipe()
     {
+        
         float lowestPoint = transform.position.y - heightOffset;
         float highestPoint = transform.position.y + heightOffset;
 
         Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), transform.rotation);
+
+    }
+
+    public void showOrNot()
+    {
+        pipeCounter++;
+        Debug.Log("pipeCounter: " + pipeCounter);
+        
+        if (pipeCounter % 10 == 0)
+        {
+            /*middle.showCoin();*/
+            Debug.Log("The coin was shown!");
+        }
     }
 }

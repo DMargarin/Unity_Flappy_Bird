@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using TMPro;
 
 public class LogicScript : MonoBehaviour
 {
     public int playerScore;
     public TMPro.TMP_Text score;
+
+    public TMPro.TMP_Text money;
+
     public TMPro.TMP_Text urScore;
     public TMPro.TMP_Text bestScore;
     public AudioSource pickCoinSound;
@@ -23,8 +27,10 @@ public class LogicScript : MonoBehaviour
     public bool switcher1 = false;
     public bool switcher2 = false;
     public bool switcher3 = false;
-    
 
+    private string mode;
+
+    /*public PipeMiddleScript pipeMiddleScript;*/
 
     [ContextMenu("Increase Score")]
     public void addScore(int scoreToAdd)
@@ -35,6 +41,15 @@ public class LogicScript : MonoBehaviour
         if (playerScore % 10 == 0 && playerScore != 0)
         {
             pickCoinSoundIfTen.Play();
+            mode = PlayerPrefs.GetString("mode", "challenge");
+            if(mode == "free")
+            {
+                /*pipeMiddleScript = GameObject.FindGameObjectWithTag("PipeMiddle").GetComponent<PipeMiddleScript>();
+                pipeMiddleScript.showCoin();*/
+                MainTitleScreen.Instance.addMoney(1);
+                money.text = PlayerPrefs.GetInt("amountOfMoney", 0).ToString();
+            }
+            
         }
 
         /*______________________________________________*/
@@ -52,6 +67,8 @@ public class LogicScript : MonoBehaviour
 
     public void gameOver()
     {
+        bestScore.enabled = true;
+
         gameOverScreen.SetActive(true);
 
         soundIfDeath.Play();
@@ -81,6 +98,23 @@ public class LogicScript : MonoBehaviour
             //Debug.Log("Your Score: " + playerScore);
             //Debug.Log("Best Score: " + highScore);
         } 
+    }
+
+    public void challengeGameOver()
+    {
+        gameOverScreen.SetActive(true);
+
+        soundIfDeath.Play();
+
+        //Score counting
+
+        urScore.text = "Your score: " + playerScore.ToString();
+        bestScore.enabled = false;
+
+        Debug.Log("The second condition worked");
+
+        //Debug.Log("Your Score: " + playerScore);
+        
     }
 
     public void victoryMenu()

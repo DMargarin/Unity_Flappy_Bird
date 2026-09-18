@@ -9,14 +9,20 @@ public class BirdScript : MonoBehaviour
     public Rigidbody2D myRigidbody;
     public LogicScript logic;
     public AudioSource birdFlapSound;
-    
+
+    public TMPro.TMP_Text money;
+    public GameObject moneyCounter;
 
     public float flapStrength;
     public bool IsAlive = true;
     private bool isGameOverScreenOn = false;
     private bool isVictoryScreenOn = false;
     private string mode;
-    
+
+    private int prizeCounter1;
+    private int prizeCounter2;
+    private int prizeCounter3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +31,12 @@ public class BirdScript : MonoBehaviour
         mode = PlayerPrefs.GetString("mode", "challenge");
         Debug.Log("Mode: " + mode);
 
-        
+        money.text = PlayerPrefs.GetInt("amountOfMoney", 0).ToString();
+
+        if (mode != "free")
+        {
+            moneyCounter.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -53,6 +64,7 @@ public class BirdScript : MonoBehaviour
         if(logic.playerScore == 100 && mode != "free") // Victory screen for challenges
         {
             victory(mode);
+            Debug.Log("Победа!");
         }
     }
 
@@ -63,20 +75,28 @@ public class BirdScript : MonoBehaviour
 
     public void birdDeath()
     {
-        if (isGameOverScreenOn == false && isVictoryScreenOn == false)
+        if (isGameOverScreenOn == false && isVictoryScreenOn == false && mode == "free")
         {
             logic.gameOver();
             IsAlive = false;
             isGameOverScreenOn = true;
         }
-
+        else if (isGameOverScreenOn == false && isVictoryScreenOn == false && mode != "free")
+        {
+            logic.challengeGameOver();
+            IsAlive = false;
+            isGameOverScreenOn = true;
+        }
     }
 
     public void victory(string mode)
     {
+        Debug.Log("Your mode is: " + mode);
         IsAlive = false;
 
         string typeOfChallenge = PlayerPrefs.GetString("challengeType", "type");
+
+        Debug.Log("Challenge Type: " + typeOfChallenge);
 
         switch (typeOfChallenge)
         {
@@ -86,16 +106,43 @@ public class BirdScript : MonoBehaviour
                     if (mode == "easy")
                     {
                         PlayerPrefs.SetInt("mark1", 1);
+
+                        prizeCounter1 = PlayerPrefs.GetInt("prizeCounter1", 0);
+                        if(prizeCounter1 < 1)
+                        {
+                            PlayerPrefs.SetInt("prize1", 1);
+                            prizeCounter1++;
+                            PlayerPrefs.SetInt("prizeCounter1", prizeCounter1);
+                        }
                         PlayerPrefs.Save();
                     }
                     else if (mode == "medium")
                     {
                         PlayerPrefs.SetInt("mark2", 1);
+
+                        prizeCounter2 = PlayerPrefs.GetInt("prizeCounter2", 0);
+                        if (prizeCounter2 < 1)
+                        {
+                            PlayerPrefs.SetInt("prize2", 1);
+                            prizeCounter2++;
+                            PlayerPrefs.SetInt("prizeCounter2", prizeCounter2);
+                        }
                         PlayerPrefs.Save();
                     }
                     else if (mode == "hard")
                     {
                         PlayerPrefs.SetInt("mark3", 1);
+
+                        prizeCounter3 = PlayerPrefs.GetInt("prizeCounter3", 0);
+                        Debug.Log("Prize Counter 3: " +  prizeCounter3);
+                        if (prizeCounter3 < 1)
+                        {
+                            PlayerPrefs.SetInt("prize3", 1);
+                            prizeCounter3++;
+                            PlayerPrefs.SetInt("prizeCounter3", prizeCounter3);
+
+                            Debug.Log("Prize three's condition: " + PlayerPrefs.GetInt("prize3", 1));
+                        }
                         PlayerPrefs.Save();
                     }
                     logic.victoryMenu();
@@ -103,7 +150,7 @@ public class BirdScript : MonoBehaviour
                 }
             break;
 
-            case "challenge2":
+            /*case "challenge2":
                 if (isVictoryScreenOn == false)
                 {
                     if (mode == "easy")
@@ -147,7 +194,7 @@ public class BirdScript : MonoBehaviour
                     logic.victoryMenu();
                     isVictoryScreenOn = true;
                 }
-            break;
+            break;*/
         }
     }
 }

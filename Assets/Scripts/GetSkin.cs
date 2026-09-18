@@ -10,7 +10,14 @@ public class GetSkin : MonoBehaviour
 
     void Start()
     {
-        skin.sprite = SkinSelector.Instance.GetCurrentSkin();
+        string wholeName = "skin_" + SkinSelector.Instance.GetCurrentName();
+
+        bool i = PlayerPrefs.GetInt(wholeName, 0) == 1;
+
+        if (i == true)
+        {
+            skin.sprite = SkinSelector.Instance.GetCurrentSkin();
+        }
     }
 
     // Update is called once per frame

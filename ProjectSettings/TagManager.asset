@@ -13,6 +13,11 @@ TagManager:
   - mark2
   - mark3
   - SkinManager
+  - Money
+  - mark 2
+  - mark 1
+  - mark 3
+  - PipeMiddle
   layers:
   - Default
   - TransparentFX
