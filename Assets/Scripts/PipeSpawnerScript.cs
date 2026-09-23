@@ -5,7 +5,7 @@ using UnityEngine;
 public class PipeSpawnerScript : MonoBehaviour
 {
     public GameObject pipe;
-    public PipeMoveScript move;
+    /*public PipeMoveScript move;*/
     public float heightOffset = 10;
     private float requiredDistance = 12.5f;
     private float spawnRate = 2.5f;
@@ -14,14 +14,13 @@ public class PipeSpawnerScript : MonoBehaviour
     private bool isInitialized = false;
 
     private int pipeCounter;
-    /*public PipeMiddleScript middle;*/
+    
 
     // Start is called before the first frame update
     void Start()
     {
         
         spawnPipe();
-        showOrNot();
     }
 
     // Update is called once per frame
@@ -51,7 +50,6 @@ public class PipeSpawnerScript : MonoBehaviour
             if (timer >= spawnRate)
             {
                 spawnPipe();
-                showOrNot();
                 timer = 0;
             }
         }
@@ -63,7 +61,6 @@ public class PipeSpawnerScript : MonoBehaviour
         else
         {
             spawnPipe();
-            showOrNot();
             timer = 0;
         }
     }
@@ -74,19 +71,27 @@ public class PipeSpawnerScript : MonoBehaviour
         float lowestPoint = transform.position.y - heightOffset;
         float highestPoint = transform.position.y + heightOffset;
 
-        Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), transform.rotation);
+        GameObject newPipe = Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), transform.rotation);
+        PipeMiddleScript middle = newPipe.GetComponentInChildren<PipeMiddleScript>();
 
+        showOrNot(middle);
     }
 
-    public void showOrNot()
+    public void showOrNot(PipeMiddleScript middle)
     {
         pipeCounter++;
         Debug.Log("pipeCounter: " + pipeCounter);
-        
-        if (pipeCounter % 10 == 0)
+
+        string mode = PlayerPrefs.GetString("mode", "challenge");
+
+        if (pipeCounter % 10 == 0 && mode == "free")
         {
-            /*middle.showCoin();*/
+            middle.showCoin();
             Debug.Log("The coin was shown!");
+        }
+        else
+        {
+            middle.hideCoin();
         }
     }
 }

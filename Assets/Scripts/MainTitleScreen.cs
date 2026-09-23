@@ -161,7 +161,7 @@ public class MainTitleScreen : MonoBehaviour
 
     public void adButton()
     {
-        addMoney(10);
+        /*addMoney(10);*/
     }
 
     public void soundOnOff()

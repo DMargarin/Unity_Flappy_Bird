@@ -30,4 +30,9 @@ public class PipeMiddleScript : MonoBehaviour
     {
         coin.SetActive(true);
     }
+
+    public void hideCoin()
+    {
+        coin.SetActive(false);
+    }
 }

@@ -70,7 +70,18 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        birdDeath();
+        if (collision.gameObject.CompareTag("Pipe"))
+        {
+            birdDeath();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Coin"))
+        {
+            collision.gameObject.SetActive(false);
+        }
     }
 
     public void birdDeath()

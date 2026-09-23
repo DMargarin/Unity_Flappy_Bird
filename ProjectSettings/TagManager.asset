@@ -18,6 +18,7 @@ TagManager:
   - mark 1
   - mark 3
   - PipeMiddle
+  - Pipe
   layers:
   - Default
   - TransparentFX
