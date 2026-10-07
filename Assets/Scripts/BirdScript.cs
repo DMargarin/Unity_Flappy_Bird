@@ -23,6 +23,8 @@ public class BirdScript : MonoBehaviour
     private int prizeCounter2;
     private int prizeCounter3;
 
+    private int deathCounter;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,8 @@ public class BirdScript : MonoBehaviour
         Debug.Log("Mode: " + mode);
 
         money.text = PlayerPrefs.GetInt("amountOfMoney", 0).ToString();
+
+        deathCounter = PlayerPrefs.GetInt("deathCounter", 0);
 
         if (mode != "free")
         {
@@ -91,12 +95,33 @@ public class BirdScript : MonoBehaviour
             logic.gameOver();
             IsAlive = false;
             isGameOverScreenOn = true;
+
+            YandexManager.Instance.SaveCloudData();
+
+            deathCounter++;
+            PlayerPrefs.SetInt("deathCounter", deathCounter);
+            if (deathCounter % 3 == 0) 
+            {
+                Debug.Log("Let's watch some ad");
+                YandexManager.Instance.ShowInterstitial();
+            }
+            
         }
         else if (isGameOverScreenOn == false && isVictoryScreenOn == false && mode != "free")
         {
             logic.challengeGameOver();
             IsAlive = false;
             isGameOverScreenOn = true;
+
+            YandexManager.Instance.SaveCloudData();
+
+            deathCounter++;
+            PlayerPrefs.SetInt("deathCounter", deathCounter);
+            if (deathCounter % 3 == 0)
+            {
+                Debug.Log("Let's watch some ad");
+                YandexManager.Instance.ShowInterstitial();
+            }
         }
     }
 

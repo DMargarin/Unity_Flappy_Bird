@@ -12,10 +12,14 @@ public class MainTitleScreen : MonoBehaviour
     public GameObject price1;
     public GameObject price2;
 
-    public Image buttonImage;
+    public Image musicButtonImage;
 
-    public Sprite state1;
-    public Sprite state2;
+    public Sprite musicState1;
+    public Sprite musicState2;
+
+    public Image sfxButtonImage;
+    public Sprite sfxState1;
+    public Sprite sfxState2;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,15 +39,15 @@ public class MainTitleScreen : MonoBehaviour
         switch (a)
         {
             case 1:
-                buttonImage.sprite = state1;
+                musicButtonImage.sprite = musicState1;
                 AudioListener.volume = 1f;
                 break;
             case 2:
-                buttonImage.sprite = state2;
+                musicButtonImage.sprite = musicState2;
                 AudioListener.volume = 0f;
                 break;
         }
-        
+
     }
 
     public void addMoney(int moneyToAdd)
@@ -56,6 +60,8 @@ public class MainTitleScreen : MonoBehaviour
         Save(amount);
         money.text = amount.ToString();
         UpdateMoney();
+
+        YandexManager.Instance.SaveCloudData();
     }
 
     public void price1Button()
@@ -99,6 +105,8 @@ public class MainTitleScreen : MonoBehaviour
 
             PlayerPrefs.SetInt(productNameArrayElement, 1);
             StateOfProductUpdate(productNameArrayElement, buttonNumber);
+
+            YandexManager.Instance.SaveCloudData();
         }
 
     }
@@ -161,10 +169,12 @@ public class MainTitleScreen : MonoBehaviour
 
     public void adButton()
     {
-        /*addMoney(10);*/
+        YandexManager.Instance.ShowRewarded(() => {
+            addMoney(10); 
+        });
     }
 
-    public void soundOnOff()
+    /*public void soundOnOff()
     {
         if (AudioListener.volume == 0f)
         {
@@ -180,6 +190,28 @@ public class MainTitleScreen : MonoBehaviour
             PlayerPrefs.SetInt("soundButton", 2);
             PlayerPrefs.Save();
         }
+    }*/
+
+    public void RefreshUIFromCloud()
+    {
+        // 1. Обновляем текст монет на экране
+        UpdateMoney();
+
+        // 2. Обновляем состояние звука и иконки
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.RefreshAudioSettings();
+        }
+
+        // 3. Если у вас на старте должны проверяться купленные темы/скины, 
+        // можно вызвать методы их проверки прямо здесь:
+        if (ThemeSelector.Instance != null)
+            StateOfProductUpdate("theme_" + ThemeSelector.Instance.GetCurrentName(), 1);
+        if (SkinSelector.Instance != null)
+            StateOfProductUpdate("skin_" + SkinSelector.Instance.GetCurrentName(), 2);
+
+        Debug.Log("Интерфейс меню успешно обновлен актуальными данными из Облака!");
     }
+
 }
 

@@ -19,6 +19,7 @@ TagManager:
   - mark 3
   - PipeMiddle
   - Pipe
+  - Coin
   layers:
   - Default
   - TransparentFX
